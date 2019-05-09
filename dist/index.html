@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>画板</title>
+<link href="/index.css" rel="stylesheet"></head>
+<body>
+	<div class="drawCon">
+		<div class="drawHeader">
+			<ul class="controlArea">
+				<li><button id="backward">后退</button></li>
+				<li><button id="forward">前进</button></li>
+				<li><button id="clearAll">清除画布</button></li>
+				<li>画笔颜色：<input id="penceilColor" type="color" value = "#222222"></li>
+				<li>画笔粗细：<input id="penceilWeight" type="number" value=2 min=1 max=120></li>
+				<li>画布颜色：<input id="canvasColor" type="color" value = "#ffffff"></li>
+				<li class="scaleZone"><button id="larger">放大</button>&nbsp;<button id="smaller">缩小</button> 当前缩放比例：<input type="number" readonly id="scaleNum" value=1 min="1"/></li>
+				<li class="shareLayerBtn">共享信息面板</li>
+			</ul>
+		</div>
+		<div class="drawBody">
+			<canvas id="canvas"></canvas>
+		</div>
+		<div class="sub-window">
+				<h2>Hello <span class="userNameTag">Fox</span>, welcome use the FoxFlower DrawBoard</h2>
+				<div class="onlineUserList">
+					<div>在线用户有：</div>
+					<span>Fox</span>
+				</div>
+				<div class="chatZoon">
+					<div class="titleMsgBox">聊天信息</div>
+					<div class="msgBox">
+						<p>Fox:哈哈哈哈</p>
+					</div>
+					<div>
+						<input class="msgTxt" type="text"></input>
+						<button class="sendBtn">发送</button>
+					</div>
+				</div>
+		</div>
+	</div>
+<script type="text/javascript" src="/bundle.js"></script></body>
+</html>

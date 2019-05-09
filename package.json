@@ -1,0 +1,35 @@
+{
+  "name": "drawboard",
+  "version": "1.0.0",
+  "description": "online share drawboard, people connected online can draw togeter in the board.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server",
+    "start": "nodemon server server.js"
+  },
+  "keywords": [
+    "drawboard"
+  ],
+  "author": "Fox",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.2",
+    "css-loader": "^2.1.1",
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.6.0",
+    "nodemon": "^1.19.0",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
