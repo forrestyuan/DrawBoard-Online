@@ -1,4 +1,4 @@
-class tool{
+export default class Tool{
    static getEle(selector, isList = false){
     return !isList ? document.querySelector(selector) : document.querySelectorAll(selector);
   }
@@ -19,5 +19,3 @@ class tool{
     return res;
   }
 }
-
-module.exports =  tool;
