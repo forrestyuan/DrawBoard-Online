@@ -52,37 +52,31 @@ html,body{
 	width:50px
 }
 .shareLayerBtn{
-	position: absolute;
+	/* position: absolute; */
 	right:10%;
 	cursor: pointer;
 	padding:10px;
 	transition: all linear .3s;
-}
-.shareLayerBtn:hover{
 	box-shadow: 1px 1px 30px 1px #ccc;
 	border-radius: 5px;
+}
+.shareLayerBtn:hover{
+	color: #fff;
+	background-color: #222;
 }
 .sub-window{
 	display: none;
 	position: fixed;
-	right:50px;
-	top:100px;
+	width:100%;
+	height:100%;
+	left:0px;
+	background-color: #fff;
 	box-shadow: 1px 1px 30px 1px #ccc;
 	padding:20px;
-	z-index: 12000;
+	box-sizing: border-box;
+	z-index: 120000;
 }
-.sub-window::before{
-	content:'';
-	position: absolute;
-	width:30px;
-	height:30px;
-	background-color: #fff;
-	transform: rotate(45deg);
-	top:-10px;
-	right:20%;
-	z-index: -1;
-	
-}
+
 .sub-window .onlineUserList span{
 	display: inline-block;
 	vertical-align: middle;
@@ -95,4 +89,9 @@ html,body{
 }
 .userNameTag{color: red; font-weight: 700;}
 .titleMsgBox{font-size: 14px;}
-.msgBox{width:100%;height:150px;border:solid 1px #ccc;}
+.msgBox{width:100%;height:300px;border:solid 1px #ccc;overflow-y: scroll;}
+.close-panel{
+	position: absolute;
+	right:5%;
+	top:5%;
+}
