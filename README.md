@@ -53,9 +53,6 @@ npm run start
 
 ![效果图2](http://photo.forrestyuan.cn/draw2.gif)
 
-## 5、Author
-
-![作者微信](http://photo.forrestyuan.cn/1525233766715.jpg)
 
 # License
 
