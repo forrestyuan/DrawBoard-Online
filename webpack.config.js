@@ -57,9 +57,16 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     hot: true,
     hotOnly: true,
-    open: true,
     proxy:{
-      '/api':'http://127.0.0.1:3000'
+      '/api':{
+        target:'http://127.0.0.1:3001/api',
+        pathWrite:{'^/api':''},
+        changeOrgin:true
+      },
+      '/':{
+        target:'http://127.0.0.1:3001',
+        changeOrgin:true
+      }
     }
   }
 };
