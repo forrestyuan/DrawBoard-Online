@@ -25,10 +25,6 @@ module.exports = {
           { loader: "url-loader", options: { limit:8100,name:'./img/[hash:7].[name].[ext]'} }
         ]
       },
-      // {
-      //   test: /\.(png|jpg|svg|gif)/,
-      //   use: [{loader:"file-loader",options:{name: '[name].[ext]'}}]
-      // },
       { test: /\.(woff|woff2|eot|ttf|otf)$/, use: ["file-loader"] },
       {
         test: /\.(html)$/,
