@@ -49,9 +49,14 @@ npm run start
 
 ## 4、效果图
 
+![效果图1](http://photo.forrestyuan.cn/draw1.gif)
+
+![效果图2](http://photo.forrestyuan.cn/draw2.gif)
+
 ## 5、Author
 
-
+![作者微信](http://photo.forrestyuan.cn/1525233766715.jpg)
 
 # License
+
 MIT
