@@ -1,8 +1,10 @@
 # DrawBoard-Online
 
+draw together with yout coworker, enjoy the creating time
+
 ## 1、基于socket io 和 canvas  实现的共享画板
 
-> 起初只是想要写个简单的画板,后面不知不觉的想起石墨文档，就想将当前这个画布功能，开发成一个简易版的协作画板。
+> 起初只是想要写个简单的画板,后面不知不觉的想起石墨文档有一个白板功能，就想将当前这个画布功能，开发成一个简易版的协作画板。
 > <hr>
 > 在线演示：努力部署中，目前需要clone到本地运行。
 
