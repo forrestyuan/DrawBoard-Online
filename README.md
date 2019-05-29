@@ -61,7 +61,7 @@ npm run start
 ## 5、使用MDUI后效果
 
 ![效果图3](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade1.PNG)
-![效果图4](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade1.PNG)
+![效果图4](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade2.PNG)
 
 # License
 
