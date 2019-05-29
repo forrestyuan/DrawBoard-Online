@@ -11,21 +11,32 @@ module.exports = {
     publicPath: "/"
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.css$/,
-        use: [
-          { loader: MiniCssExtractPlugin.loader, options: {} },
-          { loader: "css-loader", options: {} }
+        use: [{
+            loader: MiniCssExtractPlugin.loader,
+            options: {}
+          },
+          {
+            loader: "css-loader",
+            options: {}
+          }
         ]
       },
       {
         test: /\.(png|jpg|svg|gif)(\?.*)?$/,
-        use: [
-          { loader: "url-loader", options: { limit:8100,name:'./img/[hash:7].[name].[ext]'} }
-        ]
+        use: [{
+          loader: "url-loader",
+          options: {
+            limit: 8100,
+            name: './img/[hash:7].[name].[ext]'
+          }
+        }]
       },
-      { test: /\.(woff|woff2|eot|ttf|otf)$/, use: ["file-loader"] },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"]
+      },
       {
         test: /\.(html)$/,
         use: {
@@ -36,14 +47,16 @@ module.exports = {
         }
       },
       {
-        test:/\.js$/,
-        exclude:/node_modules/,
-        use:'babel-loader'
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
       }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "index.css"
@@ -53,15 +66,17 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     hot: true,
     hotOnly: true,
-    proxy:{
-      '/api':{
-        target:'http://127.0.0.1:3001/api',
-        pathWrite:{'^/api':''},
-        changeOrgin:true
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:3001/api',
+        pathWrite: {
+          '^/api': ''
+        },
+        changeOrgin: true
       },
-      '/':{
-        target:'http://127.0.0.1:3001',
-        changeOrgin:true
+      '/': {
+        target: 'http://127.0.0.1:3001',
+        changeOrgin: true
       }
     }
   }
