@@ -9,8 +9,8 @@ export default class DrawBoard{
 		this.ctx = obj.ctx;
 		this.winW = obj.winW; //屏幕宽
 		this.winH =obj.winH; //屏幕高
-		this.canvasW = this.winW * 0.99; //画布高
-		this.canvasH = this.winH *0.8; //画布高
+		this.canvasW = this.winW * 0.985; //画布高
+		this.canvasH = this.winH *0.77; //画布高
 		this.canvas.width = this.canvasW;
 		this.canvas.height = this.canvasH;
 		this.canvasPadding = 5; //画布padding，用于界定边框线
@@ -62,15 +62,15 @@ export default class DrawBoard{
   mouseXY(event) {
     event = event || window.event;
     let x =
-      event.clientX ||
-      event.pageX ||
-      event.touches[0].clientX ||
-      event.touches[0].pageX;
+      event.clientX + window.scrollX ||
+      event.pageX + window.scrollX ||
+      event.touches[0].clientX  + window.scrollX||
+      event.touches[0].pageX + window.scrollX;
     let y =
-      event.clientY ||
-      event.pageY ||
-      event.touches[0].clientY ||
-			event.touches[0].pageY;
+      event.clientY + window.scrollY ||
+      event.pageY + window.scrollY ||
+      event.touches[0].clientY + window.scrollY ||
+			event.touches[0].pageY + window.scrollY;
 
     return [
 			(x- this.drawLayerLeft) / this.scaleList[1],

@@ -1,4 +1,6 @@
 require("../css/index.css");
+require('mdui/dist/css/mdui.min.css');
+const mdui = require('mdui/dist/js/mdui.min.js')
 import T from '../utils/index.js';
 import Chat from './chat.js'
 import DrawBoard from './drawBoard.js'
@@ -12,7 +14,8 @@ window.onload = function () {
 	let ctx = canvas.getContext("2d");
 
 	//协作设置
-	userInfo.username = prompt("what is your name:") || `用户${Math.random()*100}`;
+
+	userInfo.username = prompt("输入用户名，不输入则随机命名") || `用户${new Date().getTime()}`;
 	sessionStorage.setItem("drawusername", userInfo.username);
 	T.getEle('.userNameTag').innerHTML = userInfo.username;
 
@@ -47,7 +50,12 @@ window.onload = function () {
 						res = JSON.parse(res);
 						T.getEle('.wrapUserList').innerHTML = '';
 						res.forEach(item => {
-							T.getEle('.wrapUserList').innerHTML += `<span>${item}</span>`;
+							T.getEle('.wrapUserList').innerHTML += `
+							<div class="mdui-chip">
+								<span class="mdui-chip-icon ${item.data == userInfo.username ? 'mdui-color-yellow': 'mdui-color-black'}">${item.data.substring(0,1)}</span>
+								<span class="mdui-chip-title mdui-text-truncate" style="max-width: 95px;">${item.data}</span>
+							</div>
+							`;
 						})
 					} catch (error) {
 						console.error("数据格式出错");
@@ -59,10 +67,8 @@ window.onload = function () {
 				callback: res => {
 					try {
 						res = JSON.parse(res);
-						if (res.status) {
-							if (res.username != userInfo.username) {
+						if (res.status && res.username != userInfo.username) {
 								ctx.beginPath();
-							}
 						}
 					} catch (error) {
 						console.log(error);
@@ -133,16 +139,15 @@ window.onload = function () {
 		db.scaleHandler(scaleNum, false);
 	};
 
-	//显示关闭消息面板
-	let panelShowHideHandler = () => {
-		showPanel = !showPanel;
-		T.getEle(".sub-window").style = showPanel ? "display:inline-block" : "display:none";
-	}
-	T.getEle('.shareLayerBtn').onclick = (e) => panelShowHideHandler();
-	T.getEle(".close-panel").onclick = (e) => panelShowHideHandler();
-
 	//发送聊天消息
 	T.getEle('.sendBtn').onclick = function () {
+		if(msgInput.value.replace(/ /img, '') == ""){
+			mdui.snackbar({
+				message: '不要发送空消息',
+				position: 'top'
+			});
+			return;
+		}
 		chat.sendData('chatData', JSON.stringify({
 			"username": userInfo.username,
 			"msg": msgInput.value
@@ -155,5 +160,10 @@ window.onload = function () {
 		});
 	};
 	//添加用户
-	chat.sendData('addUser', userInfo.username)
+	chat.sendData('addUser', userInfo.username);
+	//弹出聊天界面事件绑定
+	var tab = new mdui.Tab('#example4-tab');
+  document.getElementById('example-4').addEventListener('open.mdui.dialog', function () {
+    tab.handleUpdate();
+  });
 };
