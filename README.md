@@ -39,11 +39,12 @@ npm run start
 - 历史记录（撤销，恢复）(Done)
 - 聊天室(Done)
 - 绘制协作(类似于石墨文档协作)（Done）
+- UI 界面美化（Done）
+  - 使用UI库（material Design）
+
 
 #### 待开发的功能：
 
-- UI 界面美化（待开发）
-  - 打算使用UI库（material Design）
 - 文字控件（待开发）
 - 上传图片，基于图片绘图（待开发）
 - 绘图带基本形状可拖拽调控大小 （待开发）
@@ -57,6 +58,10 @@ npm run start
 
 ![效果图2](http://photo.forrestyuan.cn/draw2.gif)
 
+## 5、使用MDUI后效果
+
+![效果图3](http://photo.forrestyuan.cn/draw2.gif)
+![效果图4](http://photo.forrestyuan.cn/draw2.gif)
 
 # License
 
