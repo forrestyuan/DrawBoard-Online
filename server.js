@@ -33,12 +33,14 @@ io.on('connection', socket => {
   }); 
   //用户进入
   socket.on('addUser', (data)=>{
-    userList.push(data);
+    userList.push({id:socket.id, data:data});
+    console.log(socket.id)
     io.emit("updateUserList", JSON.stringify(userList)); 
+    io.emit('getChatData', JSON.stringify({username: '系统',msg:data+'加入了协作'}));
   });
   socket.on('sendDrawData',data=>{
     io.emit('getDrawData',data);
-  });
+  }); 
 
   socket.on('canSetBeginPath',data=>{
     JSON.parse(data);
@@ -51,6 +53,15 @@ io.on('connection', socket => {
 
   //退出链接
   socket.on('disconnect',e=>{
+    let tmpList = JSON.parse(JSON.stringify(userList));
+    tmpList.forEach((item,key)=>{
+      if(item.id == socket.id){
+        let exitUser = userList.splice(key,1);
+        io.emit('getChatData', JSON.stringify({username:'系统',msg:exitUser.data+'退出出了协作'}));
+      }
+    });
+    console.log(JSON.stringify(userList));
+    io.emit("updateUserList",JSON.stringify(userList));
     console.log('user disconnected')
   });
 });
