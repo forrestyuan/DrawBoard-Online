@@ -62,8 +62,8 @@ html,body{
 .chat-fab{
 	z-index:1000;
 	background-color: skyblue!important;
-
 }
+.sendBtn{float:right;}
 @media (min-width: 600px){
 	.mdui-tab a {
 			min-width: 72px!important;

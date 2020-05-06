@@ -49,7 +49,7 @@ io.on('connection', socket => {
 
   socket.on('syncConfig', data=>{
     io.emit('resetConfig',data);
-  })
+  });
 
   //退出链接
   socket.on('disconnect',e=>{

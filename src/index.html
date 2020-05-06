@@ -42,7 +42,7 @@
 				<label class="mdui-m-t-1" for="penceilWeight">画笔粗细</label>
 			</a>
 			<a class="mdui-ripple mdui-ripple-white cm_btn">
-				<input id="canvasColor" type="color" value="#ffffff"></li>
+				<input id="canvasColor" type="color" value="#ffffff"/>
 				<label class="mdui-m-t-1" for="canvasColor">画布颜色</label>
 			</a>
 			<a id="larger" class="mdui-ripple mdui-ripple-white cm_btn">
@@ -55,10 +55,15 @@
 				<label>缩小</label>
 			</a>
 			<a class="mdui-ripple mdui-ripple-white">
-				<input type="number" readonly id="scaleNum" value=1 min="1" /></li>
+				<input type="number" readonly id="scaleNum" value=1 min="1" />
 				<label class="mdui-m-t-1">缩放比</label>
 			</a>
+			<a id="tool-more" class="mdui-ripple mdui-ripple-white">
+				<i class="mdui-icon material-icons">dashboard</i>
+				<label class="mdui-m-t-1">更多</label>
+			</a>
 		</div>
+
 	</div>
 	<div class="drawCon">
 		<button class="mdui-fab mdui-fab-fixed mdui-ripple chat-fab" mdui-dialog={target:'#example-4'}>
@@ -76,11 +81,15 @@
 			<div class="chatZoon">
 				<div class="titleMsgBox">聊天信息</div>
 				<div class="msgBox"></div>
-				<div>
+				<div class="txt-edit-section">
 					<div class=" mdui-textfield mdui-textfield-floating-label">
 						<label class="mdui-textfield-label">Message</label>
 						<textarea class=" msgTxt mdui-textfield-input"></textarea>
 					</div>
+					<button id="selectChatImgTrigger" class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-ripple mdui-color-theme-accent">
+						<input id="chatImgSelect" type="file" accept="image/*" hidden/>
+						<i class="mdui-icon material-icons">image</i>
+					</button>
 					<button class=" sendBtn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">发送</button>
 
 				</div>

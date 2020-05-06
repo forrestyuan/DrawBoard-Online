@@ -12,22 +12,11 @@ window.onload = function () {
 	//画布对象和上下文
 	let canvas = T.getEle("#canvas");
 	let ctx = canvas.getContext("2d");
-
+	userInfo.username = `游客${new Date().getTime()}`;
 	//协作设置
-
-	userInfo.username = prompt("输入用户名，不输入则随机命名") || `用户${new Date().getTime()}`;
-	sessionStorage.setItem("drawusername", userInfo.username);
-	T.getEle('.userNameTag').innerHTML = userInfo.username;
-
 	let msgBox = T.getEle('.msgBox');
 	let msgInput = T.getEle('.msgTxt');
-	let genChatTpl = (name = 'unkonw', content = 'unkonw') => {
-		return `
-			<div>
-				<span>${name}说:&nbsp;&nbsp;${content}</span><br>
-			</div> 
-			`
-	};
+
 	//实例化聊天对象
 	let chat = new Chat({
 		receive: [{
@@ -35,10 +24,17 @@ window.onload = function () {
 				callback: res => {
 					if (res) {
 						try {
-							res = JSON.parse(res)
-							msgBox.innerHTML += genChatTpl(res.username, res.msg);
+							res = JSON.parse(res);
+							if(/data:image/.test(res.msg)){
+								msgBox.innerHTML += Chat.TPL().genChatImgTpl(res.username, res.msg);
+							}else{
+								msgBox.innerHTML += Chat.TPL().genChatTxtTpl(res.username, res.msg);
+							}
 						} catch (e) {
-							console.error('返回数据有误');
+							mdui.snackbar({
+								message: '数据格式有误',
+								position: 'top'
+							});
 						}
 					}
 				}
@@ -58,7 +54,10 @@ window.onload = function () {
 							`;
 						})
 					} catch (error) {
-						console.error("数据格式出错");
+						mdui.snackbar({
+							message: '数据格式有误',
+							position: 'top'
+						});
 					}
 				}
 			},
@@ -138,6 +137,27 @@ window.onload = function () {
 	T.getEle("#smaller").onclick = () => {
 		db.scaleHandler(scaleNum, false);
 	};
+	T.getEle("#selectChatImgTrigger").onclick = () => {
+		T.getEle("#chatImgSelect").click();
+	}
+	T.getEle("#chatImgSelect").onchange = function(){
+		let that = this;
+		T.getEle("#selectChatImgTrigger").style.cssText = "border:solid 1px red;";
+		let img = document.createElement('img');
+				img.src = URL.createObjectURL(this.files[0]);
+		img.onload = ()=>{
+			var imgBase64 = T.genImgBase64(img);
+			chat.sendData('chatData', JSON.stringify({
+				"username": userInfo.username,
+				"msg": imgBase64
+			}), res =>{
+				if(res){
+					that.files=null;
+				}
+			});
+		}
+	};
+	
 
 	//发送聊天消息
 	T.getEle('.sendBtn').onclick = function () {
@@ -160,7 +180,30 @@ window.onload = function () {
 		});
 	};
 	//添加用户
-	chat.sendData('addUser', userInfo.username);
+	let initUserData = (value)=>{
+		mdui.snackbar('欢迎'+value, {buttonColor:"lightpink",position:'top'});
+		chat.sendData('addUser', userInfo.username);
+		sessionStorage.setItem("drawusername", userInfo.username);
+		T.getEle('.userNameTag').innerHTML = userInfo.username;
+	}
+	mdui.prompt('输入用户名，不输入则随机命名',
+		function (value) {
+			userInfo.username = value || userInfo.username;
+			initUserData(userInfo.username);
+		},
+		function (value) {
+			initUserData(userInfo.username);
+		},
+		{
+			cancelText:'随机吧',
+			confirmText:'填好了',
+			modal:false,
+			closeOnEsc:false,
+			confirmOnEnter:true,
+			history:false
+		}
+	);
+	
 	//弹出聊天界面事件绑定
 	var tab = new mdui.Tab('#example4-tab');
   document.getElementById('example-4').addEventListener('open.mdui.dialog', function () {

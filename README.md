@@ -2,6 +2,10 @@
 
 draw together with yout coworker, enjoy the creating time
 
+## updated May 6 
+> 优化界面效果
+> 新增聊天发送图片
+
 ## 1、基于socket io 和 canvas  实现的共享画板
 
 > 起初只是想要写个简单的画板,后面不知不觉的想起石墨文档有一个白板功能，就想将当前这个画布功能，开发成一个简易版的协作画板。
@@ -38,6 +42,7 @@ npm run start
 - 画笔粗细(Done)
 - 历史记录（撤销，恢复）(Done)
 - 聊天室(Done)
+- 聊天发送图片（Done）(new)
 - 绘制协作(类似于石墨文档协作)（Done）
 - UI 界面美化（Done）
   - 使用UI库（material Design）
@@ -48,7 +53,7 @@ npm run start
 - 文字控件（待开发）
 - 上传图片，基于图片绘图（待开发）
 - 绘图带基本形状可拖拽调控大小 （待开发）
-- 聊天功能丰富（表情，图片，音视频）（待开发）
+- 聊天功能丰富（表情，音视频）（待开发）
   - webRTC 获取视频流数据，并传输
 - 其它未知功能（x）
 
