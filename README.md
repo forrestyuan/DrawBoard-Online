@@ -57,7 +57,8 @@ npm run start
   - webRTC 获取视频流数据，并传输
 - 其它未知功能（x）
 
-## 4、效果图
+
+## 4、最原始效果图
 
 ![效果图1](http://photo.forrestyuan.cn/draw1.gif)
 
@@ -68,6 +69,8 @@ npm run start
 ![效果图3](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade1.PNG)
 ![效果图4](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade2.PNG)
 
+## 6、 新增聊天发送图片
+![效果图5](https://github.com/forrestyuan/DrawBoard-Online/blob/master/updateDemo.png)
 # License
 
 MIT
