@@ -1,7 +1,7 @@
 # DrawBoard-Online
 
 draw together with yout coworker, enjoy the creating time
-
+### [使用React 重构中]
 ## updated May 6 
 > 优化界面效果
 > 新增聊天发送图片
