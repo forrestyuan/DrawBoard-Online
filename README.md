@@ -46,6 +46,7 @@ npm run start
 - 绘制协作(类似于石墨文档协作)（Done）
 - UI 界面美化（Done）
   - 使用UI库（material Design）
+- 基于WebRTC照相得到照片，在此基础上进行绘制 （new🔥）
 
 
 #### 待开发的功能：
@@ -60,17 +61,21 @@ npm run start
 
 ## 4、最原始效果图
 
-![效果图1](http://photo.forrestyuan.cn/draw1.gif)
+![效果图1](http://photo.forrestyuan.cn/draw1.gif)  
 
 ![效果图2](http://photo.forrestyuan.cn/draw2.gif)
 
 ## 5、使用MDUI后效果
 
-![效果图3](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade1.PNG)
-![效果图4](https://github.com/forrestyuan/DrawBoard-Online/blob/master/upgrade2.PNG)
+![效果图3](http://photo.forrestyuan.cn/upgrade1.PNG)  
+![效果图4](http://photo.forrestyuan.cn/upgrade2.PNG)
 
 ## 6、 新增聊天发送图片
-![效果图5](https://github.com/forrestyuan/DrawBoard-Online/blob/master/updateDemo.png)
+![效果图5](http://photo.forrestyuan.cn/updateDemo.png)
+## 7、 基于WebRTC照相得到照片，在此基础上进行绘制
+![效果图6](http://photo.forrestyuan.cn/DB_RTC2.png)  
+![效果图7](http://photo.forrestyuan.cn/DB_RTC1.png)
+
 # License
 
 MIT
