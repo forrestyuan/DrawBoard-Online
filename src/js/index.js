@@ -56,13 +56,11 @@ window.onload = function () {
             res.forEach((item) => {
               T.getEle(".wrapUserList").innerHTML += `
 							<div class="mdui-chip">
-								<span class="mdui-chip-icon ${
-                  item.data == userInfo.username
-                    ? "mdui-color-yellow"
-                    : "mdui-color-black"
+								<span class="mdui-chip-icon ${item.data == userInfo.username
+                  ? "mdui-color-yellow"
+                  : "mdui-color-black"
                 }">${item.data.substring(0, 1)}</span>
-								<span class="mdui-chip-title mdui-text-truncate" style="max-width: 95px;">${
-                  item.data
+								<span class="mdui-chip-title mdui-text-truncate" style="max-width: 95px;">${item.data
                 }</span>
 							</div>
 							`;
@@ -126,9 +124,10 @@ window.onload = function () {
   chat.getSocket().on("setScreenshot", (res) => {
     try {
       console.log(res);
-      // let frame = T.processVideoFrame(res.shot);
-      // let imageData = ctx.createImageData(res.shot);
-      ctx.putImageData(res.shot, 0, 0);
+      let data = res.shot.buffer.split(',')
+      let imageData = new ImageData(new Uint8ClampedArray(data), res.shot.width, res.shot.height)
+      
+      ctx.putImageData(imageData, 0, 0);
     } catch (error) {
       console.log(error);
     }
@@ -215,10 +214,16 @@ window.onload = function () {
         video.srcObject = stream;
         video.onloadedmetadata = () => video.play();
         T.getEle("#pauseVideo").onclick = () => {
-          // T.computeFrame(ctx, canvas, video);
+          let data = T.computeFrame(ctx, canvas, video);
+          console.log(data.data.buffer)
+          let buffer = ''
+          buffer += data.data[0]
+          data.data.forEach((b, idx) => {
+            if (idx >= 1) buffer += (',' + b)
+          })
           chat.sendData("screenshot", {
             username: userInfo.username,
-            shot: T.computeFrame(ctx, canvas, video),
+            shot: { width: data.width, height: data.height, buffer }
           });
         };
         T.getEle("#stopVideo").onclick = () => {
