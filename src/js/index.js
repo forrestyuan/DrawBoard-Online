@@ -16,6 +16,7 @@ window.onload = function () {
   //协作设置
   let msgBox = T.getEle(".msgBox");
   let msgInput = T.getEle(".msgTxt");
+  let video = document.getElementById("VIDEO");
 
   //实例化聊天对象
   let chat = new Chat({
@@ -122,6 +123,16 @@ window.onload = function () {
       console.log(error);
     }
   });
+  chat.getSocket().on("setScreenshot", (res) => {
+    try {
+      console.log(res);
+      // let frame = T.processVideoFrame(res.shot);
+      // let imageData = ctx.createImageData(res.shot);
+      ctx.putImageData(res.shot, 0, 0);
+    } catch (error) {
+      console.log(error);
+    }
+  });
   //封装发送配置信息
 
   //相关事件监听//需要同步事件
@@ -189,6 +200,39 @@ window.onload = function () {
   T.getEle("#smaller").onclick = () => {
     db.scaleHandler(scaleNum, false);
   };
+
+  T.getEle("#tool-rtc").onclick = () => {
+    const constraints = {
+      audio: false,
+      video: true,
+    };
+    T.getEle("#stopVideo").onclick = null;
+    T.getEle("#pauseVideo").onclick = null;
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then(function (stream) {
+        /* 使用这个stream stream */
+        video.srcObject = stream;
+        video.onloadedmetadata = () => video.play();
+        T.getEle("#pauseVideo").onclick = () => {
+          // T.computeFrame(ctx, canvas, video);
+          chat.sendData("screenshot", {
+            username: userInfo.username,
+            shot: T.computeFrame(ctx, canvas, video),
+          });
+        };
+        T.getEle("#stopVideo").onclick = () => {
+          stream.getTracks().forEach(function (track) {
+            track.stop();
+          });
+        };
+      })
+      .catch(function (err) {
+        /* 处理error */
+        console.log(err);
+      });
+  };
+
   T.getEle("#selectChatImgTrigger").onclick = () => {
     T.getEle("#chatImgSelect").click();
   };

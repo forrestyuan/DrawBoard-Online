@@ -30,4 +30,21 @@ export default class Tool {
     canvas = null; //释放
     return dataURL;
   }
+
+  static computeFrame(ctx, canvas, video) {
+    ctx.drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight);
+    let data = ctx.getImageData(0, 0, video.offsetWidth, video.offsetHeight);
+    return data;
+  }
+  static processVideoFrame(frame) {
+    let l = frame.data.length / 4;
+
+    for (let i = 0; i < l; i++) {
+      let r = frame.data[i * 4 + 0];
+      let g = frame.data[i * 4 + 1];
+      let b = frame.data[i * 4 + 2];
+      if (g > 100 && r > 100 && b < 43) frame.data[i * 4 + 3] = 0;
+    }
+    return frame;
+  }
 }

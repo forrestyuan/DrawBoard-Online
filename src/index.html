@@ -58,6 +58,10 @@
 				<input type="number" readonly id="scaleNum" value=1 min="1" />
 				<label class="mdui-m-t-1">缩放比</label>
 			</a>
+			<a id="tool-rtc" class="mdui-ripple mdui-ripple-white" mdui-dialog={target:'#example-5'}>
+				<i class="mdui-icon material-icons">dashboard</i>
+				<label class="mdui-m-t-1">即拍即画</label>
+			</a>
 			<a id="tool-more" class="mdui-ripple mdui-ripple-white">
 				<i class="mdui-icon material-icons">dashboard</i>
 				<label class="mdui-m-t-1">更多</label>
@@ -72,6 +76,7 @@
 		<div class="drawBody">
 			<canvas id="canvas"></canvas>
 		</div>
+		<!-- 聊天窗口 -->
 		<div class=" sub-window  mdui-dialog" id="example-4">
 			<h2>Hi <span class="userNameTag">Fox</span>, 欢迎使用 DrawBoard Online</h2>
 			<div class="onlineUserList">
@@ -92,6 +97,19 @@
 					</button>
 					<button class=" sendBtn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">发送</button>
 
+				</div>
+			</div>
+		</div>
+		<!-- webRTC 截图窗口 -->
+		<div class=" sub-window  mdui-dialog" id="example-5">
+			<h2>即拍即画</h2>
+			<div>
+				<div>
+					<video id="VIDEO" width="640px" height="480px"></video>
+				</div>
+				<div class="txt-edit-section">
+					<button id="stopVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">退出</button>
+					<button id="pauseVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">拍一拍</button>
 				</div>
 			</div>
 		</div>
