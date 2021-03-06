@@ -58,8 +58,8 @@
 				<input type="number" readonly id="scaleNum" value=1 min="1" />
 				<label class="mdui-m-t-1">缩放比</label>
 			</a>
-			<a id="tool-rtc" class="mdui-ripple mdui-ripple-white" mdui-dialog={target:'#example-5'}>
-				<i class="mdui-icon material-icons">dashboard</i>
+			<a id="tool-rtc" class="mdui-ripple mdui-ripple-white">
+				<i class="mdui-icon material-icons">camera_alt</i>
 				<label class="mdui-m-t-1">即拍即画</label>
 			</a>
 			<a id="tool-more" class="mdui-ripple mdui-ripple-white">
@@ -108,7 +108,7 @@
 					<video id="VIDEO" width="640px" height="480px"></video>
 				</div>
 				<div class="txt-edit-section">
-					<button id="stopVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">退出</button>
+					<button id="stopVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent"  mdui-dialog-cancel>退出</button>
 					<button id="pauseVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">拍一拍</button>
 				</div>
 			</div>

@@ -6,7 +6,7 @@ import Chat from "./chat.js";
 import DrawBoard from "./drawBoard.js";
 
 const userInfo = {};
-window.onload = function () {
+window.onload = () => {
   //其它事件
   let showPanel = false;
   //画布对象和上下文
@@ -17,6 +17,11 @@ window.onload = function () {
   let msgBox = T.getEle(".msgBox");
   let msgInput = T.getEle(".msgTxt");
   let video = document.getElementById("VIDEO");
+  let inst_RTC = new mdui.Dialog(T.getEle('#example-5'), {
+    modal: true,
+    closeOnEsc: false,
+  })
+  let isVideoOn = false
 
   //实例化聊天对象
   let chat = new Chat({
@@ -37,6 +42,12 @@ window.onload = function () {
                   res.username,
                   res.msg
                 );
+                if (userInfo.username !== res.username) {
+                  mdui.snackbar({
+                    message: `${res.username}发来消息:${res.msg}`,
+                    position: 'right-top'
+                  });
+                }
               }
             } catch (e) {
               mdui.snackbar({
@@ -56,7 +67,7 @@ window.onload = function () {
             res.forEach((item) => {
               T.getEle(".wrapUserList").innerHTML += `
 							<div class="mdui-chip">
-								<span class="mdui-chip-icon ${item.data == userInfo.username
+								<span class="mdui-chip-icon ${item.data === userInfo.username
                   ? "mdui-color-yellow"
                   : "mdui-color-black"
                 }">${item.data.substring(0, 1)}</span>
@@ -126,7 +137,7 @@ window.onload = function () {
       console.log(res);
       let data = res.shot.buffer.split(',')
       let imageData = new ImageData(new Uint8ClampedArray(data), res.shot.width, res.shot.height)
-      
+
       ctx.putImageData(imageData, 0, 0);
     } catch (error) {
       console.log(error);
@@ -201,8 +212,12 @@ window.onload = function () {
   };
 
   T.getEle("#tool-rtc").onclick = () => {
+    if (isVideoOn) {
+      return
+    }
+    isVideoOn = true
     const constraints = {
-      audio: false,
+      audio: true,
       video: true,
     };
     T.getEle("#stopVideo").onclick = null;
@@ -210,6 +225,7 @@ window.onload = function () {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(function (stream) {
+        inst_RTC.open()
         /* 使用这个stream stream */
         video.srcObject = stream;
         video.onloadedmetadata = () => video.play();
@@ -227,6 +243,7 @@ window.onload = function () {
           });
         };
         T.getEle("#stopVideo").onclick = () => {
+          isVideoOn = false
           stream.getTracks().forEach(function (track) {
             track.stop();
           });
@@ -236,6 +253,7 @@ window.onload = function () {
         /* 处理error */
         console.log(err);
       });
+
   };
 
   T.getEle("#selectChatImgTrigger").onclick = () => {
@@ -289,10 +307,10 @@ window.onload = function () {
   };
   //添加用户
   let initUserData = (value) => {
-    mdui.snackbar("欢迎" + value, {
-      buttonColor: "lightpink",
-      position: "top",
-    });
+    // mdui.snackbar("欢迎" + value, {
+    //   buttonColor: "lightpink",
+    //   position: "top",
+    // });
     chat.sendData("addUser", userInfo.username);
     sessionStorage.setItem("drawusername", userInfo.username);
     T.getEle(".userNameTag").innerHTML = userInfo.username;
@@ -309,7 +327,7 @@ window.onload = function () {
     {
       cancelText: "随机吧",
       confirmText: "填好了",
-      modal: false,
+      modal: true,
       closeOnEsc: false,
       confirmOnEnter: true,
       history: false,
