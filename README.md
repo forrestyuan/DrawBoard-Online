@@ -1,42 +1,59 @@
-# DrawBoard-Online
+## DrawBoard-Online  
+Draw together with your coworker, enjoy the creating time!😊  
+绘你所想，画你所爱！  
 
-draw together with yout coworker, enjoy the creating time
-### [使用React 重构中]
-## updated May 6 
-> 优化界面效果
-> 新增聊天发送图片
+起初只是想要写个简单的画板,后面不知不觉的想起石墨文档有一个白板功能，就想将当前这个画布功能，开发成一个简易版的协作画板。
 
-## 1、基于socket io 和 canvas  实现的共享画板
+直到目前已经更新了几个版本，从最初简陋的只能画画，到后面的聊天，再到后面调用摄像头获取画面等等一系列的功能补充，都是在工作之余挤牙膏般的挤时间来完善。  
 
-> 起初只是想要写个简单的画板,后面不知不觉的想起石墨文档有一个白板功能，就想将当前这个画布功能，开发成一个简易版的协作画板。
-> 期待你们的PR🎉
-> <hr>
-> 在线演示：努力部署中，目前需要clone到本地运行。
+之前这个应用都是用传统的开发方式开发的，后续将用vueh或react重构整个应用，目前还有很多功能没有完善。`期待你们的 pull request`一起完善这个应用的功能🤣
 
-## 2、运行
+这里不做具体的实现细节，具体的可以`fork`源码，相信机智的你一定可以秒懂。
+ 
+### 1、共享协作画板仓库
+前端界面用webpack进行了打包，后台服务使用了express，协作方面采用socket.io来承载聊天内容以及绘画数据的沟通能力、数据的协同传输。
+> *在线演示*：努力部署中，目前需要clone到本地运行。  
+>  `fork`代码到自己的仓库，补充完善代码不如`pull request`一下  
+> 🏭仓库地址：[https://github.com/forrestyuan/DrawBoard-Online](https://github.com/forrestyuan/DrawBoard-Online)    
+> 💬仓库讨论区：[https://github.com/forrestyuan/DrawBoard-Online/discussions](https://github.com/forrestyuan/DrawBoard-Online/discussions)
 
+### 2、如何在本地运行  
+想要体验这个应用，你可以按照下面的步骤启动应用哦！！！  
+💻开发模式：1-2-3 步骤  
+💻预览模式：1-2-4 步骤  
+1. 下载仓库
 ```bash
 git clone <repository>
-
+```
+2. 安装依赖
+```bash
 npm install
+```
+`注意！ 如果你是查看的同时也是需要修改代码，接下来请执行下面 -第3步骤- 即可， 如果只是查看但是不需要修改代码，请执行 -第4步骤- 即可`
 
-#>>>对于开发阶段：
+3. 对于开发阶段（请走这个步骤）
+```bash
 #前端服务启动（利用webpack dev server）：
 npm run dev
 
 #后台服务启动(使用了nodemon 实时监听后端文件修改重启服务)
 npm run start
 
-#>>>对于生产阶段：
-#打包前端文件,然后启动服务器即可
-1、 npm run build
-2、 npm run start
+#启动后在浏览器输入url： http://127.0.0.1:8080
 ```
 
-## 3、功能：
+ 4. 对于生产阶段（请走这个步骤）
+```bash
+#打包前端文件,然后启动服务器即可
+npm run build
+npm run start
 
-#### 开发完成:
+#启动后在浏览器输入url： http://127.0.0.1:3001
+```
 
+### 3、共享协作画板目前具有的功能
+
+1. 开发完成:  
 - 画布缩放(✔)
 - 画布颜色(✔)
 - 画笔颜色(✔)
@@ -50,9 +67,7 @@ npm run start
 - 聊天消息通知条右上角提示用户（✔）
 - 基于WebRTC照相得到照片，在此基础上进行绘制 ~🔥（✔）
 
-
-#### 待开发的功能：
-
+2. 待开发的功能：  
 - 文字控件（待开发）
 - 上传图片，基于图片绘图（待开发）
 - 绘图带基本形状可拖拽调控大小 （待开发）
@@ -62,24 +77,22 @@ npm run start
   - 类似QQ抖动窗口提醒
 - 其它未知功能（🤔）
 
-
-## 4、最原始效果图
+#### 3-1、最原始效果图
 
 ![效果图1](http://photo.forrestyuan.cn/draw1.gif)  
 
 ![效果图2](http://photo.forrestyuan.cn/draw2.gif)
 
-## 5、使用MDUI后效果
+#### 3-2、使用MDUI后效果
 
 ![效果图3](http://photo.forrestyuan.cn/upgrade1.PNG)  
 ![效果图4](http://photo.forrestyuan.cn/upgrade2.PNG)
 
-## 6、 新增聊天发送图片
+#### 3-3、 新增聊天发送图片
 ![效果图5](http://photo.forrestyuan.cn/updateDemo.png)
-## 7、 基于WebRTC照相得到照片，在此基础上进行绘制
+### 4、 基于WebRTC照相得到照片，在此基础上进行绘制
 ![效果图6](http://photo.forrestyuan.cn/DB_RTC2.png)  
-![效果图7](http://photo.forrestyuan.cn/DB_RTC1.png)
 
-# License
+### License
 
 MIT
