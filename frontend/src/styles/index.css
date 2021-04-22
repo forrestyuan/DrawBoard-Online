@@ -1,0 +1,89 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #efefef;
+}
+.drawCon {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.controlArea li {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 3px 2px;
+}
+#canvas {
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 1px 1px 30px 1px #ccc;
+  cursor: url("../assets/penceil.png") 10 26, auto;
+  background-color: #fff;
+  border: solid 2px #222;
+  border-radius: 8px;
+}
+.scaleZone {
+  border: solid 1px #ccc;
+  padding: 5px;
+}
+#scaleNum {
+  width: 50px;
+}
+.cm_btn {
+  cursor: pointer;
+  transition: all linear 0.3s;
+  border-radius: 5px;
+}
+.cm_btn:hover {
+  color: #fff;
+  background-color: #222;
+}
+.sub-window {
+  padding: 20px;
+}
+.onlineUserList {
+  width: 30%;
+  float: left;
+}
+.chatZoon {
+  margin-top: 10px;
+  width: 70%;
+  float: right;
+}
+.userNameTag {
+  color: red;
+  font-weight: 700;
+}
+.titleMsgBox {
+  font-size: 14px;
+}
+.msgBox {
+  width: 100%;
+  height: 250px;
+  border: solid 1px #ccc;
+  overflow-y: scroll;
+}
+
+.mdui-dialog {
+  overflow-y: scroll !important;
+}
+.chat-fab {
+  z-index: 1000;
+  background-color: pink !important;
+}
+.chat-fab i {
+  color: #444;
+}
+.sendBtn {
+  float: right;
+}
+@media (min-width: 600px) {
+  .mdui-tab a {
+    min-width: 72px !important;
+    padding: 12px 0 !important;
+  }
+}
