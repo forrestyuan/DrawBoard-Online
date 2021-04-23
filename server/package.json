@@ -1,0 +1,22 @@
+{
+  "name": "drawboard",
+  "version": "1.0.0",
+  "description": "online share drawboard, people connected online can draw togeter in the board.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server ./server/index.js",
+    "server": "node ./server/index.js"
+  },
+  "keywords": [
+    "drawboard"
+  ],
+  "author": "Fox",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}

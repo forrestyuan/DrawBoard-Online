@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --port 8082"
   },
   "keywords": [
     "drawboard"
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
+    "@types/random-string": "0.0.28",
     "@types/socket.io": "^2.1.13",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.2",
@@ -29,6 +30,7 @@
     "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
+    "@types/socket.io-client": "^1.4.36",
     "mdui": "^0.4.2",
     "random-string": "^0.2.0",
     "socket.io": "^2.2.0",

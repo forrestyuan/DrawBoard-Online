@@ -1,8 +1,9 @@
 class Tool {
-  static getEle(selector: string, isList: boolean = false) {
-    return !isList
-      ? document.querySelector(selector)
-      : document.querySelectorAll(selector);
+  static getEle(selector: string) {
+    return document.querySelector(selector) as HTMLElement;
+  }
+  static getEleList(selector: string) {
+    return document.querySelectorAll(selector);
   }
 
   static getTargetWH(obj: boolean | HTMLElement = false) {
@@ -19,7 +20,7 @@ class Tool {
     if (typeof obj !== "boolean") {
       res = [obj.offsetWidth, obj.offsetHeight];
     }
-    return res;
+    return res ?? [];
   }
 
   static genImgBase64(img: HTMLImageElement) {

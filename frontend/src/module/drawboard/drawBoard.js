@@ -25,6 +25,7 @@ export default class DrawBoard {
     this.updateParam();
     this.init();
     this.ctx.beginPath();
+
     this.socket.on("getDrawData", (data) => {
       data = JSON.parse(data);
       if (data.username != sessionStorage.getItem("drawusername")) {
@@ -204,10 +205,27 @@ export default class DrawBoard {
     this.timeTravelStep = -1;
     this.drawHistoryStack = [];
   }
-
+  //绘制欢迎语
+  drawWelcome() {
+    this.ctx.font = `50px Georgia`;
+    this.ctx.fillStyle = "#fff";
+    this.ctx.fillText(
+      "欢迎👏使用共享协作画板😘",
+      this.canvasW / 2.8,
+      this.canvasH / 2 - 25
+    );
+    this.ctx.font = `20px Georgia`;
+    this.ctx.fillStyle = "#fff";
+    this.ctx.fillText(
+      "我叫👀 foxyuan, 大家都叫我fox 🦊",
+      this.canvasW / 2.1,
+      this.canvasH / 2 + 50
+    );
+  }
   //初始化
   init() {
     this.drawEvent();
+    this.drawWelcome();
     window.onresize = () => {
       this.drawEvent(true);
       this.updateParam();
