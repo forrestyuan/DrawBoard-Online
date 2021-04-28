@@ -2,11 +2,19 @@ import "./styles/index.css";
 import "mdui/dist/css/mdui.min.css";
 import mdui from "mdui";
 import T from "./utils/index";
-import DrawBoard from "./module/drawboard/drawBoard.js";
+import DrawBoard, { IDrawboradConf } from "./module/drawboard/drawBoard.js";
 import { userStore } from "./store/user";
 import { ChatBoots } from "./module/chat";
 import { SnackBar } from "./components/snackbar";
 
+export interface ISyncConf extends IDrawboradConf {
+  travel: number;
+  clearCanvas: boolean;
+}
+export interface ISyncDrawConfProps {
+  username: string;
+  config: ISyncConf;
+}
 window.onload = () => {
   //画布对象和上下文
   let canvas = T.getEle("#canvas")! as HTMLCanvasElement;
@@ -44,9 +52,9 @@ window.onload = () => {
   );
 
   //配置重置
-  chat.getSocket().on("resetConfig", (res: any) => {
+  chat.getSocket().on("resetConfig", (data: string) => {
     try {
-      res = JSON.parse(res);
+      const res: ISyncDrawConfProps = JSON.parse(data);
       console.log(res);
       if (res.username != userStore.username) {
         res.config.travel != 0 ? db.travel(res.config.travel) : false;
@@ -149,7 +157,7 @@ window.onload = () => {
       })
     );
   };
-  let scaleNum = T.getEle("#scaleNum");
+  let scaleNum = T.getEle("#scaleNum")! as HTMLInputElement;
   T.getEle("#larger").onclick = () => {
     db.scaleHandler(scaleNum, true);
   };
