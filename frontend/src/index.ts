@@ -59,15 +59,7 @@ window.onload = () => {
       if (res.username != userStore.username) {
         res.config.travel != 0 ? db.travel(res.config.travel) : false;
         res.config.clearCanvas ? db.clearCanvas() : false;
-        res.config.penceilWeight
-          ? db.updateCtxStyle({ penceilWeight: res.config.penceilWeight })
-          : false;
-        res.config.penceilColor
-          ? db.updateCtxStyle({ penceilColor: res.config.penceilColor })
-          : false;
-        res.config.canvasColor
-          ? db.updateCtxStyle({ canvasColor: res.config.canvasColor })
-          : false;
+        db.updateCtxStyle(res.config);
       }
     } catch (error) {
       console.log(error);

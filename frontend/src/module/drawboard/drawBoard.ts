@@ -1,13 +1,14 @@
 export interface IDrawboradConf {
-  canvas?: HTMLCanvasElement;
-  ctx?: CanvasRenderingContext2D;
-  winW?: number;
-  winH?: number;
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
+  winW: number;
+  winH: number;
   penceilWeight?: number;
   penceilColor?: string;
   canvasColor?: string;
   canvasPadding?: number;
 }
+export type ICtxStyle = Partial<IDrawboradConf>
 export type DrawEvent = MouseEvent & TouchEvent;
 import {} from "socket.io-client";
 export default class DrawBoard {
@@ -76,7 +77,7 @@ export default class DrawBoard {
     this.cansLimitBt = this.canvasH - this.canvasPadding; //下边界
   }
   //更新上下文样式参数
-  updateCtxStyle(obj: IDrawboradConf) {
+  updateCtxStyle(obj: ICtxStyle) {
     console.log(obj);
     this.ctx.lineWidth = obj.penceilWeight || this.ctx.lineWidth;
     this.ctx.strokeStyle = obj.penceilColor || this.ctx.strokeStyle;
