@@ -12,7 +12,7 @@ module.exports = function (IMSERVER_IO, userList) {
         }
       });
       //用户进入
-      socket.on("addUser", (data) => {
+      socket.on("addUser", (data, callback) => {
         userList.push({ id: socket.id, data: data });
         console.log(socket.id);
         IMSERVER_IO.emit("updateUserList", JSON.stringify(userList));
@@ -20,6 +20,7 @@ module.exports = function (IMSERVER_IO, userList) {
           "getChatData",
           JSON.stringify({ username: "系统", msg: data + "加入了协作" })
         );
+        callback(data);
       });
       socket.on("sendDrawData", (data) => {
         IMSERVER_IO.emit("getDrawData", data);
@@ -39,6 +40,10 @@ module.exports = function (IMSERVER_IO, userList) {
       socket.on("screenshot", (data) => {
         IMSERVER_IO.emit("setScreenshot", data);
       });
+      socket.on("videoData", (data, cb) => {
+        IMSERVER_IO.emit("videoData", data);
+        cb();
+      });
 
       //退出链接
       socket.on("disconnect", (e) => {
@@ -53,6 +58,7 @@ module.exports = function (IMSERVER_IO, userList) {
                 msg: exitUser.data + "退出出了协作",
               })
             );
+            IMSERVER_IO.emit("userDisconnect", exitUser.data);
           }
         });
         console.log(JSON.stringify(userList));

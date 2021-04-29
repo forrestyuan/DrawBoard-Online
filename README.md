@@ -16,7 +16,8 @@ Draw together with your coworker, enjoy the creating time!😊
 > `🔥注意！！！已更新`:
 >
 > 1. 修改目录结构。
-> 2. 使用 typescript 重构（完成大约～ 70%）
+> 2. 使用 typescript 重构（完成大约～ 75%）
+> 3. 🔥🔥 **`新增视屏会议`** 🔥🔥（safari,IE 不支持，用到最新特性，在 chrome 下体验）
 
 ### 1、共享协作画板仓库
 
@@ -94,6 +95,7 @@ npm run start
   - 使用 UI 库（material Design）
 - 聊天消息通知条右上角提示用户（✔）
 - 基于 WebRTC 照相得到照片，在此基础上进行绘制 ~🔥（✔）
+- webRTC 视频会议～ 🔥🔥（✔）
 
 2. 待开发的功能：
 
@@ -102,7 +104,6 @@ npm run start
 - 绘图带基本形状可拖拽调控大小 （待开发）
 - 聊天功能丰富（待开发）
   - 支持聊天表情
-  - webRTC 视频聊天
   - 类似 QQ 抖动窗口提醒
 - 其它未知功能（🤔）
 
@@ -121,6 +122,10 @@ npm run start
 #### 3-3、 基于 WebRTC 照相得到照片，在此基础上进行绘制
 
 ![效果图6](http://photo.forrestyuan.cn/DB_RTC2.png)
+
+#### 3-4、 视频会议
+
+![](https://ftp.bmp.ovh/imgs/2021/04/49ca2a0b7a86d982.png)
 
 ### License
 
