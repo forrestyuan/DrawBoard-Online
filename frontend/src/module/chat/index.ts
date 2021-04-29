@@ -13,7 +13,6 @@ import Video from "../videochat/video";
 export const ChatBoots = (ctx: CanvasRenderingContext2D) => {
   //协作设置
   let msgBox = T.getEle(".msgBox")!;
-  let videoChuncks: BlobPart[] = [];
   //实例化聊天对象
   return new Chat({
     receive: [
@@ -50,7 +49,7 @@ export const ChatBoots = (ctx: CanvasRenderingContext2D) => {
           let username = res.username;
           let node = T.getEle(`#${username}`)! as HTMLVideoElement;
           console.log(data);
-          videoChuncks = [];
+          let videoChuncks: BlobPart[] = [];
           videoChuncks.push(data);
           const blob = new Blob(videoChuncks, {
             type: "video/mp4; codecs=opus",
