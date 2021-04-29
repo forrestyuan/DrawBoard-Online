@@ -1,11 +1,14 @@
 import "./styles/index.css";
 import "mdui/dist/css/mdui.min.css";
-import mdui from "mdui";
-import T from "./utils/index";
-import DrawBoard, { IDrawboradConf } from "./module/drawboard/drawBoard.js";
-import { userStore } from "./store/user";
-import { ChatBoots } from "./module/chat";
-import { SnackBar } from "./components/snackbar";
+import { Tab, prompt } from "mdui";
+import T from "@/utils/index";
+import DrawBoard, { IDrawboradConf } from "@/module/drawboard/drawBoard";
+import { UserStore } from "@/store/user";
+import { ChatBoots } from "@/module/chat";
+import { SnackBar } from "@/components/snackbar";
+import { videoShot } from "@/module/videoshot";
+import videoChat from "./module/videochat";
+import Video from "./module/videochat/video";
 
 export interface ISyncConf extends IDrawboradConf {
   travel: number;
@@ -21,22 +24,11 @@ window.onload = () => {
   let ctx = canvas.getContext("2d")!;
   //协作设置
   let msgInput = T.getEle(".msgTxt")! as HTMLTextAreaElement;
-  /*
-   * 这里定义视屏截图
-   */
-  let video = document.getElementById("VIDEO")! as HTMLVideoElement;
-  let inst_RTC = new mdui.Dialog("#example-5", {
-    modal: true,
-    closeOnEsc: false,
-    closeOnCancel: true,
-    closeOnConfirm: true,
-    destroyOnClosed: true,
-  });
-  let isVideoOn = false;
 
   //实例化聊天对象
-  let chat = ChatBoots(userStore, ctx);
-
+  let chat = ChatBoots(ctx);
+  //视屏截图
+  videoShot(chat, ctx, canvas);
   //实例化画板
   const db = new DrawBoard(
     {
@@ -50,13 +42,14 @@ window.onload = () => {
     },
     chat.getSocket()
   );
-
+  //视频会议
+  videoChat(chat);
   //配置重置
   chat.getSocket().on("resetConfig", (data: string) => {
     try {
       const res: ISyncDrawConfProps = JSON.parse(data);
       console.log(res);
-      if (res.username != userStore.username) {
+      if (res.username != UserStore.username) {
         res.config.travel != 0 ? db.travel(res.config.travel) : false;
         res.config.clearCanvas ? db.clearCanvas() : false;
         db.updateCtxStyle(res.config);
@@ -87,14 +80,14 @@ window.onload = () => {
     db.travel(-1);
     chat.sendData(
       "syncConfig",
-      JSON.stringify({ username: userStore.username, config: { travel: -1 } })
+      JSON.stringify({ username: UserStore.username, config: { travel: -1 } })
     );
   };
   T.getEle("#forward").onclick = () => {
     db.travel(1);
     chat.sendData(
       "syncConfig",
-      JSON.stringify({ username: userStore.username, config: { travel: 1 } })
+      JSON.stringify({ username: UserStore.username, config: { travel: 1 } })
     );
   };
 
@@ -103,7 +96,7 @@ window.onload = () => {
     chat.sendData(
       "syncConfig",
       JSON.stringify({
-        username: userStore.username,
+        username: UserStore.username,
         config: { clearCanvas: true },
       })
     );
@@ -118,7 +111,7 @@ window.onload = () => {
     chat.sendData(
       "syncConfig",
       JSON.stringify({
-        username: userStore.username,
+        username: UserStore.username,
         config: { penceilWeight: value },
       })
     );
@@ -131,7 +124,7 @@ window.onload = () => {
     chat.sendData(
       "syncConfig",
       JSON.stringify({
-        username: userStore.username,
+        username: UserStore.username,
         config: { penceilColor: target.value },
       })
     );
@@ -144,7 +137,7 @@ window.onload = () => {
     chat.sendData(
       "syncConfig",
       JSON.stringify({
-        username: userStore.username,
+        username: UserStore.username,
         config: { canvasColor: target.value },
       })
     );
@@ -157,53 +150,10 @@ window.onload = () => {
     db.scaleHandler(scaleNum, false);
   };
 
-  T.getEle("#tool-rtc").onclick = () => {
-    if (isVideoOn) {
-      return;
-    }
-    isVideoOn = true;
-    const constraints = {
-      audio: true,
-      video: true,
-    };
-    T.getEle("#stopVideo").onclick = null;
-    T.getEle("#pauseVideo").onclick = null;
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then(function (stream) {
-        inst_RTC.open();
-        /* 使用这个stream stream */
-        video.srcObject = stream;
-        video.onloadedmetadata = () => video.play();
-        T.getEle("#pauseVideo").onclick = () => {
-          let data = T.computeFrame(ctx, canvas, video);
-          console.log(data.data.buffer);
-          let buffer = "";
-          buffer += data.data[0];
-          data.data.forEach((b, idx) => {
-            if (idx >= 1) buffer += "," + b;
-          });
-          chat.sendData("screenshot", {
-            username: userStore.username,
-            shot: { width: data.width, height: data.height, buffer },
-          });
-        };
-        T.getEle("#stopVideo").onclick = () => {
-          isVideoOn = false;
-          stream.getTracks().forEach(function (track) {
-            track.stop();
-          });
-        };
-      })
-      .catch(function (err) {
-        /* 处理error */
-        console.log(err);
-      });
-  };
-
   T.getEle("#selectChatImgTrigger").onclick = () => {
     T.getEle("#chatImgSelect").click();
   };
+
   T.getEle("#chatImgSelect").onchange = (event: Event) => {
     event = event ?? window.event;
     let target = event.target as HTMLInputElement;
@@ -219,7 +169,7 @@ window.onload = () => {
       chat.sendData(
         "chatData",
         JSON.stringify({
-          username: userStore.username,
+          username: UserStore.username,
           msg: imgBase64,
         }),
         () => {
@@ -238,7 +188,7 @@ window.onload = () => {
     chat.sendData(
       "chatData",
       JSON.stringify({
-        username: userStore.username,
+        username: UserStore.username,
         msg: msgInput.value,
       }),
       (res) => {
@@ -253,15 +203,18 @@ window.onload = () => {
   };
   //添加用户
   let initUserData = () => {
-    chat.sendData("addUser", userStore.username);
-    sessionStorage.setItem("drawusername", userStore.username);
-    T.getEle(".userNameTag")!.innerHTML = userStore.username;
+    chat.sendData("addUser", UserStore.username, (res) => {
+      console.log(res);
+      Video.addVideoTpl(res);
+    });
+    sessionStorage.setItem("drawusername", UserStore.username);
+    T.getEle(".userNameTag")!.innerHTML = UserStore.username;
   };
 
-  mdui.prompt(
+  prompt(
     "输入用户名，不输入则随机命名",
     (value) => {
-      userStore.username = value || userStore.username;
+      UserStore.username = value || UserStore.username;
       initUserData();
     },
     () => {
@@ -277,7 +230,7 @@ window.onload = () => {
   );
 
   //弹出聊天界面事件绑定
-  var tab = new mdui.Tab("#example4-tab");
+  var tab = new Tab("#example4-tab");
   T.getEle("#example-4")!.addEventListener("open.mdui.dialog", () => {
     tab.handleUpdate();
   });

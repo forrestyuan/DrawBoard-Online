@@ -1,3 +1,6 @@
+import { Socket } from "socket.io-client";
+
+export type SocketIOClientType = typeof Socket;
 export interface IDrawboradConf {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -8,12 +11,11 @@ export interface IDrawboradConf {
   canvasColor?: string;
   canvasPadding?: number;
 }
-export type ICtxStyle = Partial<IDrawboradConf>
+export type ICtxStyle = Partial<IDrawboradConf>;
 export type DrawEvent = MouseEvent & TouchEvent;
-import {} from "socket.io-client";
-export default class DrawBoard {
+class DrawBoard {
   //画布对象和上下文
-  socket: any;
+  socket: SocketIOClientType;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   winW: number;
@@ -35,7 +37,7 @@ export default class DrawBoard {
   cansLimitBt: number = 0; //画布下边界
 
   //构造函数
-  constructor(obj: IDrawboradConf, socket: any) {
+  constructor(obj: IDrawboradConf, socket: SocketIOClientType) {
     //画布对象和上下文
     this.socket = socket;
     this.canvas = obj.canvas;
@@ -56,7 +58,6 @@ export default class DrawBoard {
     this.updateParam();
     this.init();
     this.ctx.beginPath();
-
     this.socket.on("getDrawData", (res: string) => {
       const data = JSON.parse(res);
       if (data.username != sessionStorage.getItem("drawusername")) {
@@ -265,3 +266,6 @@ export default class DrawBoard {
     };
   }
 }
+
+export default DrawBoard;
+export { DrawBoard };

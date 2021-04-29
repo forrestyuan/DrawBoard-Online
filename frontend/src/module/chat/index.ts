@@ -3,18 +3,17 @@ import { SnackBar } from "../../components/snackbar";
 import Chat from "./chat";
 import T from "../../utils/index";
 import { UserStore } from "../../store/user";
+import Video from "../videochat/video";
 
 /**
  * @description 聊天bootstrap
- * @param userStore 用户store
+ * @param UserStore 用户store
  * @param ctx 画板上下文
  */
-export const ChatBoots = (
-  userStore: UserStore,
-  ctx: CanvasRenderingContext2D
-) => {
+export const ChatBoots = (ctx: CanvasRenderingContext2D) => {
   //协作设置
   let msgBox = T.getEle(".msgBox")!;
+  let videoChuncks: BlobPart[] = [];
   //实例化聊天对象
   return new Chat({
     receive: [
@@ -26,13 +25,13 @@ export const ChatBoots = (
               res = JSON.parse(res);
               if (/data:image/.test(res.msg)) {
                 msgBox.innerHTML += Chat.TPL(
-                  userStore.isMyself(res.username)
+                  UserStore.isMyself(res.username)
                 ).genChatImgTpl(res.username, res.msg);
               } else {
                 msgBox.innerHTML += Chat.TPL(
-                  userStore.isMyself(res.username)
+                  UserStore.isMyself(res.username)
                 ).genChatTxtTpl(res.username, res.msg);
-                if (!userStore.isMyself(res.username)) {
+                if (!UserStore.isMyself(res.username)) {
                   SnackBar(`${res.username}发来消息: ${res.msg}`);
                 }
               }
@@ -44,6 +43,32 @@ export const ChatBoots = (
         },
       },
       {
+        socketName: "videoData",
+        callback: (res: any) => {
+          console.log(res);
+          let data = res.shot.buffer;
+          let username = res.username;
+          let node = T.getEle(`#${username}`)! as HTMLVideoElement;
+          console.log(data);
+          videoChuncks = [];
+          videoChuncks.push(data);
+          const blob = new Blob(videoChuncks, {
+            type: "video/mp4; codecs=opus",
+          });
+          const videoURL = window.URL.createObjectURL(blob);
+          node.src = videoURL;
+          node.play();
+          // node.srcObject = data;
+          // node.onloadedmetadata = () => node.play();
+        },
+      },
+      {
+        socketName: "userDisconnect",
+        callback: (username: string) => {
+          Video.removeVideoTpl(username);
+        },
+      },
+      {
         socketName: "updateUserList",
         callback: (res) => {
           try {
@@ -51,8 +76,11 @@ export const ChatBoots = (
             T.getEle(".wrapUserList")!.innerHTML = "";
             res.forEach((item: any) => {
               T.getEle(".wrapUserList")!.innerHTML += Chat.TPL(
-                userStore.isMyself(item.data)
+                UserStore.isMyself(item.data)
               ).genUserTag(item.data);
+              if (!UserStore.isMyself(item.data)) {
+                Video.addVideoTpl(item.data);
+              }
             });
           } catch (error) {
             SnackBar("数据格式有误");
@@ -64,7 +92,7 @@ export const ChatBoots = (
         callback: (res) => {
           try {
             res = JSON.parse(res);
-            if (res.status && res.username != userStore.username) {
+            if (res.status && res.username != UserStore.username) {
               ctx.beginPath();
             }
           } catch (error) {

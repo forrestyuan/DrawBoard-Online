@@ -1,17 +1,16 @@
 import randomString from "random-string";
 
 class UserStore {
-  username: string = `游客${randomString({
+  static username: string = `游客${randomString({
     length: 8,
     numeric: false,
     letters: true,
     special: false,
   })}`;
-  isMyself(username: string) {
-    return this.username === username;
+  static isMyself(username: string) {
+    return UserStore.username === username;
   }
 }
 
-const userStore = new UserStore();
-export { userStore, UserStore };
-export default userStore;
+export { UserStore };
+export default UserStore;

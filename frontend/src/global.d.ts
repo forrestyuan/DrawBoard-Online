@@ -50,3 +50,5 @@ declare namespace mdui {
     };
   }
 }
+
+declare var MediaRecorder: any;

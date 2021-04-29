@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>画板</title>
+	<title>共享协作画板</title>
 </head>
 
 <body>
@@ -62,6 +62,10 @@
 				<i class="mdui-icon material-icons">camera_alt</i>
 				<label class="mdui-m-t-1">即拍即画</label>
 			</a>
+			<a id="tool-rtc-chat" class="mdui-ripple mdui-ripple-white">
+				<i class="mdui-icon material-icons">voice_chat</i>
+				<label class="mdui-m-t-1">视屏会议</label>
+			</a>
 			<a id="tool-more" class="mdui-ripple mdui-ripple-white">
 				<i class="mdui-icon material-icons">dashboard</i>
 				<label class="mdui-m-t-1">更多</label>
@@ -110,6 +114,18 @@
 				<div class="txt-edit-section">
 					<button id="stopVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent"  mdui-dialog-cancel>退出</button>
 					<button id="pauseVideo" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">拍一拍</button>
+				</div>
+			</div>
+		</div>
+		<!-- 视屏聊天窗口 -->
+		<div class="sub-window mdui-dialog" id="videoChatBox">
+			<h2>视频会议</h2>
+			<div>
+				<!-- 这里存放动态生成的 video dom -->
+				<div id="videoChatBoxCon">
+				</div>
+				<div class="txt-edit-section">
+					<button id="stopVideoChat" class=" mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent"  mdui-dialog-cancel>退出视屏会议</button>
 				</div>
 			</div>
 		</div>
