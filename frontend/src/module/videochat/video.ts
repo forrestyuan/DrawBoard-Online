@@ -5,7 +5,7 @@ class Video {
     root: HTMLElement | null = document.getElementById("videoChatBoxCon")
   ) {
     let videoTpl = `
-        <video id="${username}" width="300px" height="300px" ></video>
+        <video id="${username}" autoplay src="http://gossv.cfp.cn/videos/mts_videos/medium/temp/VCG42N1257170638.mp4" width="300px" height="300px" ></video>
       `;
     if (root !== null) {
       root.innerHTML += videoTpl;

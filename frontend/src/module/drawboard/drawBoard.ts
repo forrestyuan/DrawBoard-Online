@@ -63,6 +63,7 @@ class DrawBoard {
       if (data.username != sessionStorage.getItem("drawusername")) {
         this.ctx.lineTo(data.axis[0], data.axis[1]);
         this.ctx.stroke();
+        this.pushStack();
       }
     });
   }
@@ -112,13 +113,9 @@ class DrawBoard {
 
   //绘制堆栈进入操作
   pushStack() {
-    if (this.drawHistoryStack.length > 19) {
-      this.drawHistoryStack.shift();
-      this.drawHistoryStack.push(this.canvas.toDataURL());
-    } else {
-      this.timeTravelStep++;
-      this.drawHistoryStack.push(this.canvas.toDataURL());
-    }
+    //FIXME:  此处记录次数未做限制，可能存在栈溢出的风险，后续优化
+    this.timeTravelStep++;
+    this.drawHistoryStack.push(this.canvas.toDataURL());
   }
 
   /**
@@ -173,6 +170,7 @@ class DrawBoard {
           this.syncData(mouseAxis);
         }
         this.ctx.stroke();
+        this.pushStack();
       };
     };
     //监听触摸（点击）屏幕事件结束，置空滑动事件和将当前画布信息进栈
@@ -182,7 +180,6 @@ class DrawBoard {
         "canSetBeginPath",
         JSON.stringify({ username: sessionStorage.getItem("drawusername") })
       );
-      this.pushStack();
     };
   }
   //画布历史穿梭（前进和后退）

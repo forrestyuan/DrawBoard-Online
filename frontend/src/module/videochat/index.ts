@@ -63,7 +63,7 @@ const videoChat = (
           let stopTime = setTimeout(() => {
             mc.stop();
             clearTimeout(stopTime);
-          }, 280);
+          }, 2980);
 
           mc.ondataavailable = function (e: any) {
             console.log("视频流");
@@ -72,7 +72,7 @@ const videoChat = (
               shot: { buffer: e.data },
             });
           };
-        }, 300);
+        }, 3000);
         //关闭rtc流
         T.getEle("#stopVideoChat").onclick = () => {
           isVideoOn = false;

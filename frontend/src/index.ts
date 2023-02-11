@@ -50,7 +50,9 @@ window.onload = () => {
       const res: ISyncDrawConfProps = JSON.parse(data);
       console.log(res);
       if (res.username != UserStore.username) {
-        res.config.travel != 0 ? db.travel(res.config.travel) : false;
+        if (!!res.config.travel) {
+          db.travel(res.config.travel);
+        }
         res.config.clearCanvas ? db.clearCanvas() : false;
         db.updateCtxStyle(res.config);
       }
@@ -205,7 +207,6 @@ window.onload = () => {
   let initUserData = () => {
     chat.sendData("addUser", UserStore.username, (res) => {
       console.log(res);
-      Video.addVideoTpl(res);
     });
     sessionStorage.setItem("drawusername", UserStore.username);
     T.getEle(".userNameTag")!.innerHTML = UserStore.username;
